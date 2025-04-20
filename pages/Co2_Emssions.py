@@ -96,14 +96,56 @@ y_axis = st.selectbox("Select a metric to display:", [
 ])
 
 if len(selected_classes) > 0:
+    # Checkboxes for vertical lines
+    show_1994 = st.checkbox("Show 1994: Tier 1 Emissions Standards", value=True)
+    show_2004 = st.checkbox("Show 2004: Tier 2 Emissions Standards", value=True)
+    show_2012 = st.checkbox("Show 2012: GHG Emissions Regulation", value=True)
+    show_2017 = st.checkbox("Show 2017: Tier 3 Emissions Regulation", value=True)
+
+    # Collect active regulation years and labels
+    regulation_lines = []
+    if show_1994:
+        regulation_lines.append({'Year': 1994, 'Label': 'Tier 1'})
+    if show_2004:
+        regulation_lines.append({'Year': 2000, 'Label': 'Tier 2'})
+    if show_2012:
+        regulation_lines.append({'Year': 2012, 'Label': 'GHG'})
+    if show_2017:
+        regulation_lines.append({'Year': 2017, 'Label': 'Tier 3'})
+
+    # Base line chart
     fuel_economy = alt.Chart(filtered_df).mark_line().encode(
-        x=alt.X("Year:O", title="Year", axis=alt.Axis(format="d")),  # Ensure Year is treated as categorical for correct labeling
+        x=alt.X("Year:O", title="Year", axis=alt.Axis(format="d")),
         y=alt.Y(y_axis, title=y_axis),
         color="Regulatory Class:N"
     )
-    st.altair_chart(fuel_economy, use_container_width=True)
+
+    chart = fuel_economy
+
+    if regulation_lines:
+        regulation_df = pd.DataFrame(regulation_lines)
+
+        vlines = alt.Chart(regulation_df).mark_rule(color='black').encode(
+            x=alt.X('Year:O')
+        )
+
+        labels = alt.Chart(regulation_df).mark_text(
+            align='left',
+            baseline='bottom',
+            dx=3,
+            dy=-3
+        ).encode(
+            x=alt.X('Year:O'),
+            text='Label'
+        )
+
+        chart += vlines + labels
+
+    st.altair_chart(chart, use_container_width=True)
+
 else:
     st.write("No vehicle type selected")
+
 
 # Add link to Home.py in sidebar
 st.sidebar.page_link("Home.py", label="Home")

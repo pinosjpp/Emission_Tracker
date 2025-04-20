@@ -92,6 +92,14 @@ with col1:
     max_year = int(df["Year"].max())
     start_year, end_year = st.slider("Select Year Range:", min_value=min_year, max_value=max_year, value=(min_year, max_year))
 
+
+    # Checkbox controls for vertical lines
+    show_1975 = st.checkbox("Show 1975: CAFE Standards", value=True)
+    show_1994 = st.checkbox("Show 1994: Tier 1 Emissions", value=True)
+    show_2004 = st.checkbox("Show 2004: Tier 2 Emissions", value=True)
+    show_2012 = st.checkbox("Show 2012: GHG Emissions", value=True)
+    show_2017 = st.checkbox("Show 2017: Tier 3 Emissions", value=True)
+
 # Filter registration data based on state and selected year range
 filtered_df = df[(df["state"] == selected_state) & (df["Year"] >= start_year) & (df["Year"] <= end_year)]
 
@@ -101,6 +109,17 @@ melted_df = filtered_df.melt(id_vars=["Year"], value_vars=["Auto", "Bus", "Truck
 
 with col2:
     fig_reg = px.line(melted_df, x="Year", y="Registrations", color="Vehicle Type", title=f"Vehicle Registrations in {selected_state}", labels={"Registrations": "Number of Registrations"})
+    # Add lines based on checkboxes
+    if show_1975:
+        fig_reg.add_vline(x=1975, line_dash="dash", line_color="black", annotation_text="CAFE Standards", annotation_position="top right")
+    if show_1994:
+        fig_reg.add_vline(x=1994, line_dash="dash", line_color="black", annotation_text="Tier 1", annotation_position="top right")
+    if show_2004:
+        fig_reg.add_vline(x=2004, line_dash="dash", line_color="black", annotation_text="Tier 2", annotation_position="top right")
+    if show_2012:
+        fig_reg.add_vline(x=2012, line_dash="dash", line_color="black", annotation_text="GHG", annotation_position="top right")
+    if show_2017:
+        fig_reg.add_vline(x=2017, line_dash="dash", line_color="black", annotation_text="Tier 3", annotation_position="top right")
     fig_reg.update_layout(height=500, margin=dict(l=40, r=40, t=40, b=40))
     st.plotly_chart(fig_reg)
 
