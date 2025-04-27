@@ -1,0 +1,18 @@
+# Ignore Streamlit secrets
+.streamlit/secrets.toml
+
+# Ignore any environment or hidden system files
+.env
+*.env
+
+# Ignore __pycache__ and Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Optional: Ignore virtual environment (if you made one locally)
+venv/
+.env/
+
+# Ignore anything you don't want to push accidentally
+*.log
