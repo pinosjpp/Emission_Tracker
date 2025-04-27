@@ -5,7 +5,11 @@ import altair as alt
 import numpy as np
 import os
 
-
+st.set_page_config(
+    page_title="Emission Tracker",
+    page_icon="🌎",  # Globe emoji as tab icon
+    layout="wide"
+)
 
 
 # Get the absolute path to the data file

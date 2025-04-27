@@ -3,6 +3,12 @@ import pandas as pd
 import plotly.express as px
 import os
 
+st.set_page_config(
+    page_title="Emission Tracker",
+    page_icon="🌎",  # Globe emoji as tab icon
+    layout="wide"
+)
+
 # Get the absolute path to the data file
 data_path = os.path.join(os.path.dirname(__file__), "../data/Motor_Vehicle_Registrations_Dashboard_data.csv")
 
