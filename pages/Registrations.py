@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import base64
 import os
 
 st.set_page_config(
@@ -8,6 +9,17 @@ st.set_page_config(
     page_icon="🌎",  # Globe emoji as tab icon
     layout="wide"
 )
+
+globe_logo_path = "data/logoGLOBE.png"
+if os.path.exists(globe_logo_path):
+    st.markdown(
+        f"""
+        <div style="position: absolute; top: 30px; right: 30px;">
+            <img src="data:image/png;base64,{base64.b64encode(open(globe_logo_path, "rb").read()).decode()}" alt="globe" width="80">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Get the absolute path to the data file
 data_path = os.path.join(os.path.dirname(__file__), "../data/Motor_Vehicle_Registrations_Dashboard_data.csv")
