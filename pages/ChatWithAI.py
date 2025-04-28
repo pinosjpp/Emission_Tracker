@@ -1,8 +1,21 @@
 import streamlit as st
+import base64
+import os
 import openai
 
 # Set the page configuration
 st.set_page_config(page_title="Talk to Us", page_icon="🗣️")
+
+globe_logo_path = "data/logoGLOBE.png"
+if os.path.exists(globe_logo_path):
+    st.markdown(
+        f"""
+        <div style="position: absolute; top: 30px; right: 30px;">
+            <img src="data:image/png;base64,{base64.b64encode(open(globe_logo_path, "rb").read()).decode()}" alt="globe" width="80">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Load OpenAI API Key
 openai.api_key = st.secrets["OPENAI_API_KEY"]
