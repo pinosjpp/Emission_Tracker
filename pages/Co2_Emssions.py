@@ -8,7 +8,7 @@ import os
 
 st.set_page_config(
     page_title="Emission Tracker",
-    page_icon="🌎",  # Globe emoji as tab icon
+    page_icon="🌎",
     layout="wide"
 )
 
@@ -69,7 +69,7 @@ fig_co2 = px.line(
 )
 
 # Enhance visualization
-fig_co2.update_traces(line=dict(width=2))  # Thicker lines for better visibility
+fig_co2.update_traces(line=dict(width=2))
 fig_co2.update_layout(
     height=500, margin=dict(l=40, r=40, t=40, b=40),
     hovermode="x unified",
@@ -77,7 +77,7 @@ fig_co2.update_layout(
     title=dict(font=dict(size=18, family="Arial", color="white")),
     font=dict(family="Arial", size=14, color="white")
 )
-fig_co2.update_xaxes(showgrid=True, dtick=10, type="linear")  # Ensure Year is treated as a number
+fig_co2.update_xaxes(showgrid=True, dtick=10, type="linear")
 fig_co2.update_yaxes(showgrid=True, title_text="CO2 Emissions (g/mi)")
 
 # Display chart
@@ -96,7 +96,7 @@ for vehicle_class in df_unique:
         selected_classes.append(vehicle_class)
 
 filtered_df = df_co2[df_co2["Regulatory Class"].isin(selected_classes)]
-filtered_df["Year"] = pd.to_numeric(filtered_df["Year"], errors='coerce').astype('Int64')  # Ensure Year is an integer
+filtered_df["Year"] = pd.to_numeric(filtered_df["Year"], errors='coerce').astype('Int64')
 filtered_df = filtered_df.groupby(["Year", "Regulatory Class"], as_index=False).agg({
     "Real-World MPG": "mean",
     "Weight (lbs)": "mean",

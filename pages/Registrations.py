@@ -6,7 +6,7 @@ import os
 
 st.set_page_config(
     page_title="Emission Tracker",
-    page_icon="🌎",  # Globe emoji as tab icon
+    page_icon="🌎",
     layout="wide"
 )
 

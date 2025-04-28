@@ -23,7 +23,7 @@ if os.path.exists(logo_path):
     )
     
 
-# Regular (left-aligned) Title and Text
+# Title and Text
 st.title("Welcome to the Emission Tracker Dashboard")
 
 st.write("""
